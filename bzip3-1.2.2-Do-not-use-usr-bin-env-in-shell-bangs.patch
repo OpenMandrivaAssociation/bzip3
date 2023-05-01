@@ -1,0 +1,75 @@
+From 2ace07164157b9a0083da0b19f2876bce288e8fd Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20P=C3=ADsa=C5=99?= <ppisar@redhat.com>
+Date: Wed, 11 Jan 2023 10:39:58 +0100
+Subject: [PATCH] Do not use /usr/bin/env in shell bangs
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fedora requires system executables to use system executables.
+This reverts upstream commit 42d02a5764a4753a7e91933be18fbd3b222beac6.
+<https://github.com/kspalaiologos/bzip3/pull/75>.
+
+Signed-off-by: Petr Písař <ppisar@redhat.com>
+---
+ bz3cat  | 2 +-
+ bz3grep | 4 ++--
+ bz3less | 2 +-
+ bz3more | 2 +-
+ bz3most | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/bz3cat b/bz3cat
+index 4d35bde..a81c66f 100644
+--- a/bz3cat
++++ b/bz3cat
+@@ -1,3 +1,3 @@
+-#!/usr/bin/env sh
++#!/usr/bin/sh
+ 
+ exec bzip3 -Bcd "$@"
+diff --git a/bz3grep b/bz3grep
+index b5d28f1..682e4c9 100644
+--- a/bz3grep
++++ b/bz3grep
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env sh
++#!/usr/bin/sh
+ #
+ # Copyright (c) 2003 Thomas Klausner.
+ #
+@@ -133,4 +133,4 @@ else
+     set +f
+ fi
+ 
+-exit "${EXIT_CODE}"
+\ No newline at end of file
++exit "${EXIT_CODE}"
+diff --git a/bz3less b/bz3less
+index 7627a6e..b008733 100644
+--- a/bz3less
++++ b/bz3less
+@@ -1,2 +1,2 @@
+-#!/usr/bin/env sh
++#!/usr/bin/sh
+ bz3cat "$@" | less
+diff --git a/bz3more b/bz3more
+index 15f1fea..d0031fc 100644
+--- a/bz3more
++++ b/bz3more
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env sh
++#!/usr/bin/sh
+ 
+ for FILE
+ do
+diff --git a/bz3most b/bz3most
+index fb173e2..624639b 100644
+--- a/bz3most
++++ b/bz3most
+@@ -1,2 +1,2 @@
+-#!/usr/bin/env sh
++#!/usr/bin/sh
+ bz3cat "$@" | most
+-- 
+2.39.0
