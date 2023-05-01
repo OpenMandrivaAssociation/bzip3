@@ -1,7 +1,7 @@
 %define major 0
 
-%define libname %mklibname shumate
-%define devname %mklibname -d shumate
+%define libname %mklibname bzip3
+%define devname %mklibname -d bzip3
 
 Name:           bzip3
 Version:        1.3.0
