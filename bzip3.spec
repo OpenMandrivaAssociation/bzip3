@@ -4,7 +4,7 @@
 %define devname %mklibname -d bzip3
 
 Name:           bzip3
-Version:        1.4.0
+Version:        1.5.0
 Release:        1
 Summary:        Tools for compressing and decompressing bzip3 files
 License:        LGPL-3.0-or-later AND BSD-2-Clause
