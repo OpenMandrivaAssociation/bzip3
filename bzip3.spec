@@ -127,7 +127,7 @@ fi
 %{_mandir}/man1/%{programs}.1*
  
 %files -n %{libname}
-%license libsais-LICENSE LICENSE
+%license LICENSE
 %doc NEWS README.md
 %{_libdir}/libbzip3.so.%{major}{,.*}
  
