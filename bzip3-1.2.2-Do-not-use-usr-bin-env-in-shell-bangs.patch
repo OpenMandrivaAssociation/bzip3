@@ -38,13 +38,6 @@ index b5d28f1..682e4c9 100644
  #
  # Copyright (c) 2003 Thomas Klausner.
  #
-@@ -133,4 +133,4 @@ else
-     set +f
- fi
- 
--exit "${EXIT_CODE}"
-\ No newline at end of file
-+exit "${EXIT_CODE}"
 diff --git a/bz3less b/bz3less
 index 7627a6e..b008733 100644
 --- a/bz3less
