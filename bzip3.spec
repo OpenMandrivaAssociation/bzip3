@@ -14,7 +14,7 @@ Source0:        https://github.com/kspalaiologos/bzip3/releases/download/%{versi
 # Import Fedora patch
 # Do not use /usr/bin/env in shell bangs, not suitable for upstream,
 # <https://github.com/kspalaiologos/bzip3/pull/75>.
-Patch0:         bzip3-1.2.2-Do-not-use-usr-bin-env-in-shell-bangs.patch
+#Patch0:         bzip3-1.2.2-Do-not-use-usr-bin-env-in-shell-bangs.patch
 
 BuildRequires:  autoconf
 BuildRequires:  autoconf-archive
