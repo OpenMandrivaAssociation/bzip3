@@ -32,6 +32,7 @@ BuildRequires:  make
 BuildRequires:  pkgconfig
 # sed in build-aux/git-version-gen
 BuildRequires:  sed
+BuildRequires:  git
 
 Requires:	%{libname} = %{EVRD}
 
