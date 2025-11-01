@@ -94,9 +94,9 @@ which use a bzip3 library.
 #    -name ax_subst_transformed_package_name.m4 \
 #    \) -delete
 # Execute git-version-gen from a system location
-ln -s %{_datadir}/gnulib/build-aux/git-version-gen build-aux/git-version-gen
+#ln -s %{_datadir}/gnulib/build-aux/git-version-gen build-aux/git-version-gen
 # Remove unused code
-echo > include/getopt-shim.h
+#echo > include/getopt-shim.h
  
 %build
 autoreconf -vfi
