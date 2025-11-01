@@ -32,6 +32,7 @@ BuildRequires:  make
 BuildRequires:  pkgconfig
 # sed in build-aux/git-version-gen
 BuildRequires:  sed
+BuildRequires:  git
 
 Requires:	%{libname} = %{EVRD}
 
@@ -81,22 +82,22 @@ which use a bzip3 library.
 %prep
 %autosetup -p1
 # Remove generated autoconf files
-rm aclocal.m4 configure Makefile.in
+#rm aclocal.m4 configure Makefile.in
 # Remove generated manual pages
-for F in *.1.in; do
-    rm "${F%%.in}"
-done
+#for F in *.1.in; do
+#    rm "${F%%.in}"
+#done
 # Unbundle autoconf macros and scripts, except those not yet packaged in
 # autoconf-archive
-find build-aux -type f \! \( \
-    -name ax_progvar.m4 -o \
-    -name ax_subst_man_date.m4 -o \
-    -name ax_subst_transformed_package_name.m4 \
-    \) -delete
+#find build-aux -type f \! \( \
+#    -name ax_progvar.m4 -o \
+#    -name ax_subst_man_date.m4 -o \
+#    -name ax_subst_transformed_package_name.m4 \
+#    \) -delete
 # Execute git-version-gen from a system location
-ln -s %{_datadir}/gnulib/build-aux/git-version-gen build-aux/git-version-gen
+#ln -s %{_datadir}/gnulib/build-aux/git-version-gen build-aux/git-version-gen
 # Remove unused code
-echo > include/getopt-shim.h
+#echo > include/getopt-shim.h
  
 %build
 autoreconf -vfi
