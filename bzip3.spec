@@ -4,12 +4,12 @@
 %define devname %mklibname -d bzip3
 
 Name:           bzip3
-Version:        1.5.3
+Version:        1.5.4
 Release:        1
 Summary:        Tools for compressing and decompressing bzip3 files
 License:        LGPL-3.0-or-later AND BSD-2-Clause
-URL:            https://github.com/kspalaiologos/bzip3
-Source0:        https://github.com/kspalaiologos/bzip3/releases/download/%{version}/%{name}-%{version}.tar.xz
+URL:            https://github.com/iczelia/bzip3
+Source0:        https://github.com/iczelia/bzip3/releases/download/%{version}/%{name}-%{version}.tar.xz
 
 # Import Fedora patch
 # Do not use /usr/bin/env in shell bangs, not suitable for upstream,
@@ -26,7 +26,7 @@ BuildRequires:  gawk
 # We do not have it right now.
 # For git-version-gen script executed from autoconf.ac
 #BuildRequires:  gnulib-devel
-BuildRequires:  libtool
+BuildRequires:  slibtool
 BuildRequires:  make
 # PKG_PROG_PKG_CONFIG in configure.ac
 BuildRequires:  pkgconfig
@@ -109,6 +109,28 @@ autoreconf -vfi
     --disable-static \
     --disable-static-exe
 %{make_build}
+
+# Compression is a classic PGO win (same class as gzip/7zip): BWT, LZP/RLE
+# and the context mixer have non-obvious hot branches on typical text/code.
+%pgo
+bin=./bzip3
+[ -x "$bin" ] || bin=./src/bzip3
+if [ ! -x "$bin" ]; then
+	echo "PGO: instrumented bzip3 not found" >&2
+	find . -name bzip3 -type f -executable 2>/dev/null || true
+	exit 1
+fi
+export LD_LIBRARY_PATH="$(pwd)/.libs${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+train=$(mktemp -d)
+trap 'rm -rf "$train"' EXIT
+# Mix of text (bzip3's sweet spot), structured source, and a small binary blob
+cp -a NEWS README.md include src "$train/" 2>/dev/null || true
+dd if=/dev/urandom of="$train/rand.bin" bs=64k count=8 status=none
+"$bin" -e -f -j 2 "$train/NEWS" "$train/README.md" "$train/rand.bin" || true
+find "$train" -name '*.bz3' -exec "$bin" -t {} \;
+find "$train" -name '*.bz3' -exec "$bin" -d -f {} \;
+# Round-trip stdin/stdout (bz3cat-style)
+printf 'hello bzip3 pgo\n' | "$bin" -c | "$bin" -d -c >/dev/null
  
 %check
 make check roundtrip %{?_smp_mflags}
